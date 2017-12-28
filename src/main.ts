@@ -65,7 +65,7 @@ export default class Transaction {
         const loadedTransaction: any = await Model.findById(transactionId).lean().exec()
         if (loadedTransaction && loadedTransaction.operations) {
             loadedTransaction.operations.forEach((operation) => {
-                operation.model = mongoose.model(operation.modelName);
+                operation.model = operation.modelName;
             });
             this.operations = loadedTransaction.operations
             this.rollbackIndex = loadedTransaction.rollbackIndex
@@ -163,7 +163,7 @@ export default class Transaction {
      * @returns id - The id of the object to insert.
      */
     public insert(modelName, data, options = {}) {
-        const model = mongoose.model(modelName);
+        const model = modelName;
 
         if (!data._id) {
             data._id = new mongoose.Types.ObjectId();
@@ -194,7 +194,7 @@ export default class Transaction {
      * @param dataObj - The object containing data to update into mongoose model.
      */
     public update(modelName, findId, data, options = {}) {
-        const model = mongoose.model(modelName);
+        const model = modelName;
         const transactionObj = {
             data,
             findId,
@@ -217,7 +217,7 @@ export default class Transaction {
      * @param findObj - The object containing data to find mongoose collection.
      */
     public remove(modelName, findId, options = {}) {
-        const model = mongoose.model(modelName);
+        const model = modelName;
         const transactionObj = {
             data: null,
             findId,
